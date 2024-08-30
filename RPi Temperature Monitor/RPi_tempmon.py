@@ -3,16 +3,24 @@ import psutil
 import os
 import RPi.GPIO as GPIO
 
-# Version 1.16 - Display highest CPU core usage
+# Version 1.31 - Added configurable update interval and display columns
 
 # Configuration
 fan_pin = 14  # Set the GPIO pin number for the fan
-color_on_hex = '#00FF00'  # Set the hex color for Fan: ON (bright green)
-color_off_hex = '#FF0000'  # Set the hex color for Fan: OFF (bright red)
-color_text_hex = '#FFFFFF'  # Set the hex color for text (white)
+color_on_hex = '#00FF00'  # HEX color for Fan: ON (green)
+color_off_hex = '#FF0000'  # HEX color for Fan: OFF (red)
+last_row_color_hex = '#00FF00'  # HEX color for the last row (green)
+update_interval = 0.5  # Set the update interval in seconds (e.g., 0.5 for faster updates)
+display_columns = ['temp', 'cpu', 'power']  # Choose which columns to display: 'temp', 'cpu', 'power'
 
-# Convert hex color to ANSI escape code
-def hex_to_ansi(hex_color):
+# Convert HEX color to ANSI escape code for the bullet
+def hex_to_ansi_bullet(hex_color):
+    hex_color = hex_color.lstrip('#')
+    r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    return f"\033[38;2;{r};{g};{b}m●\033[0m"
+
+# Convert HEX color to ANSI escape code for text
+def hex_to_ansi_text(hex_color):
     hex_color = hex_color.lstrip('#')
     r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
     return f"\033[38;2;{r};{g};{b}m"
@@ -38,7 +46,7 @@ def get_cpu_temperature():
 def get_highest_cpu_usage():
     """Get the highest CPU usage percentage across all cores."""
     try:
-        cpu_usages = psutil.cpu_percent(percpu=True, interval=1)
+        cpu_usages = psutil.cpu_percent(percpu=True, interval=0.1)  # Reduced interval for faster update
         return max(cpu_usages)
     except Exception as e:
         print(f"Error getting CPU usage: {e}")
@@ -54,21 +62,21 @@ def get_power_consumption():
 def display_system_stats():
     stats = []  # List to store the last 10 entries
 
-    # Convert hex colors to ANSI escape codes
-    color_on = hex_to_ansi(color_on_hex)
-    color_off = hex_to_ansi(color_off_hex)
-    color_text = hex_to_ansi(color_text_hex)
-
+    # Convert HEX colors to ANSI escape codes
+    color_on = hex_to_ansi_text(color_on_hex)
+    color_off = hex_to_ansi_text(color_off_hex)
+    last_row_color = hex_to_ansi_text(last_row_color_hex)
+    
     # Clear the screen at the start
     os.system('clear')
 
     while True:
         # Get fan status
         fan_status = GPIO.input(fan_pin)
-        fan_indicator = (
-            f"{color_on}● {color_text}Fan: ON{reset}" if fan_status == GPIO.HIGH
-            else f"{color_off}● {color_text}Fan: OFF{reset}"
-        )
+        if fan_status == GPIO.HIGH:
+            fan_indicator = f"{hex_to_ansi_bullet(color_on_hex)} Fan: ON"
+        else:
+            fan_indicator = f"{hex_to_ansi_bullet(color_off_hex)} Fan: OFF"
 
         # Get CPU temperature
         cpu_temp = get_cpu_temperature()
@@ -79,34 +87,56 @@ def display_system_stats():
         # Get power consumption (simplified calculation)
         power_consumption = get_power_consumption()
 
-        # Append the current stats to the list
-        if cpu_temp is not None and cpu_usage is not None:
-            stats.append(f"{cpu_temp:<15.2f} | {cpu_usage:<15.2f} | {power_consumption:<15.2f}")
+        # Create a line for the stats based on selected columns
+        line = []
+        if 'temp' in display_columns and cpu_temp is not None:
+            line.append(f"{cpu_temp:<15.2f}")
+        if 'cpu' in display_columns and cpu_usage is not None:
+            line.append(f"{cpu_usage:<15.2f}")
+        if 'power' in display_columns and power_consumption is not None:
+            line.append(f"{power_consumption:<15.2f}")
+
+        # Append the current stats to the list if any columns are selected
+        if line:
+            stats.append(" | ".join(line))
 
         # Keep only the last 10 entries
         if len(stats) > 10:
             stats.pop(0)
 
         # Determine the width of the lines
-        max_width = max(len("CPU Temp (°C)   | CPU Usage (%)   | Power (W)"), len(fan_indicator))
+        header_parts = []
+        if 'temp' in display_columns:
+            header_parts.append(f"{'CPU Temp (°C)':<15}")
+        if 'cpu' in display_columns:
+            header_parts.append(f"{'CPU Usage (%)':<15}")
+        if 'power' in display_columns:
+            header_parts.append(f"{'Power (W)':<15}")
+        header = " | ".join(header_parts)
+
+        max_width = max(len(fan_indicator), len(header))
+        for stat in stats:
+            max_width = max(max_width, len(stat))
 
         # Clear the screen
         os.system('clear')
 
-        # Print the fan status at the top with color
+        # Print the fan status at the top
         print(f"{fan_indicator:<{max_width}}")
         print("-" * max_width)
 
-        # Print the header
-        header = "CPU Temp (°C)   | CPU Usage (%)   | Power (W)"
+        # Print the header based on selected columns
         print(header)
         print("-" * max_width)
 
-        # Print the last 10 entries
-        for stat in stats:
-            print(stat)
+        # Print the last 10 entries with the last row colored
+        for i, stat in enumerate(stats):
+            if i == len(stats) - 1:  # Check if it's the last row
+                print(f"{last_row_color}{stat:<{max_width}}{reset}")
+            else:
+                print(stat)
 
-        time.sleep(1)
+        time.sleep(update_interval)  # Use the configurable update interval
 
 if __name__ == "__main__":
     try:
