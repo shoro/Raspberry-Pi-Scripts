@@ -24,4 +24,6 @@ sudo python3 fancontrol.py
 ### Stop the script
 CTRL+C
 
-## (OPTIONAL) Set the script to run automaticaly on startup
+## (OPTIONAL) Set the script to run automaticaly on startup as a service
+
+
