@@ -4,7 +4,7 @@
 FAN_PIN = 14  # Set fan pin (Default is 14)
 TEMP_ON = 50.0  # Temperature (in Celsius) to turn the fan ON (Default is 50)
 TEMP_OFF = 40.0 # Temperature (in Celsius) to turn the fan OFF (Default is 40)
-TEMP_CHECK = 1 # Time before checking the temperature again (Default is 1 second)
+TEMP_CHECK = 10 # Time before checking the temperature again (Default is 10 second)
 
 import RPi.GPIO as GPIO
 import time
