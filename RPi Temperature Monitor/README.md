@@ -15,7 +15,7 @@ curl -O https://github.com/shoro/Raspberry-Pi-Scripts/blob/main/RPi%20Temperatur
 ```
 sudo nano RPi_tempmon.py
 ```
-> [!CAUTION]
+> [!IMPORTANT]
 > Make sure to set the **_fan_pin_** if you have a fan conected to your Raspberry Pi.
 
 ### Save and Exit
