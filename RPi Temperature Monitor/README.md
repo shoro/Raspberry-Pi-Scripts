@@ -6,7 +6,7 @@
 ### Download the script
 
 ```
-curl -O https://raw.githubusercontent.com/shoro/Raspberry-Pi-Scripts/main/RPi%20Fan%20Control/RPi_fancontrol.py
+curl -O https://github.com/shoro/Raspberry-Pi-Scripts/blob/main/RPi%20Temperature%20Monitor/RPi_tempmon.py
 ```
 
 ### Edit the script
