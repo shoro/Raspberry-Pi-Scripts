@@ -31,8 +31,8 @@ Use one of the following methods
 
 OR
 
-CRON
+[Using **_'cron'_** with **_'@reboot'_**](https://github.com/shoro/Raspberry-Pi-Scripts/blob/main/RPi%20-%20startup%20autorun/2.Using%20'cron'%20with%20'@reboot'.md)
 
 OR
 
-[Creating a **_'systemd'_** Service](https://github.com/shoro/Raspberry-Pi-Scripts/blob/main/RPi%20-%20startup%20autorun/3.Creating%20a%20'systemd'%20Service.md)
+[Create a **_'systemd'_** Service](https://github.com/shoro/Raspberry-Pi-Scripts/blob/main/RPi%20-%20startup%20autorun/3.Creating%20a%20'systemd'%20Service.md)
