@@ -27,7 +27,7 @@ CTRL+C
 ### Set the script to run automaticaly on startup
 Use one of the following methods
 
-[Add script to **_"rc.local"_**](#)
+[Add script to **_"rc.local"_**](RPi - startup autorun/1.Add script to 'rc.local'.md)
 
 OR
 
