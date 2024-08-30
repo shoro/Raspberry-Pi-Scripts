@@ -3,7 +3,7 @@
 ### Download the script
 
 ```
-wget https://raw.githubusercontent.com/shoro/Raspberry-Pi-Scripts/main/RPi%20Fan%20Control/fancontrol.py
+curl -O https://raw.githubusercontent.com/shoro/Raspberry-Pi-Scripts/main/RPi%20Fan%20Control/fancontrol.py
 ```
 
 ### Edit the script
