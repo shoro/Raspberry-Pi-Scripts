@@ -1,4 +1,5 @@
 #Made by Vlad Sorodoc
+#RESTART SERVICE sudo systemctl restart RPi-fancontrol.service
 
 #SETTINGS
 FAN_PIN = 14  # Set fan pin (Default is 14)
