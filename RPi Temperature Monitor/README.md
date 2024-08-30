@@ -1,28 +1,9 @@
 # RPi Temperature Monicor
 
-### Installation of Required Libraries
-Before running the script, ensure that **'psutil'** is installed:
-```
-pip install psutil
-```
-
-If you get an error try:
-```
-sudo apt install python3-psutil
-```
-
-If you're using Python 3, you may need to use pip3:
-```
-pip3 install psutil
-```
-
-If you get an error try:
-```
-sudo apt update
-```
-```
-sudo apt install python3-psutil
-```
+> [!CAUTION]
+> Before running the script, ensure that **'psutil'** is installed.
+> To install **'psutil'** follow this link:
+> [psutil](https://github.com/shoro/Raspberry-Pi-Scripts/blob/main/RPi%20Libraries/psutil.md)
 
 ### Download the script
 
