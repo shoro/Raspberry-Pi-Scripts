@@ -24,6 +24,15 @@ sudo python3 RPi-fancontrol.py
 ### Stop the script
 CTRL+C
 
-## (OPTIONAL) Set the script to run automaticaly on startup as a service
+### Set the script to run automaticaly on startup
+Use one of the following methods
 
+[Add script to **_"rc.local"_**](#)
 
+OR
+
+CRON
+
+OR
+
+SERVICE
