@@ -10,6 +10,8 @@ sudo nano fancontrol.py
 Make sure to set the FAN_PIN, TEMP_ON, TEMP_OFF, TEMP_CHECK
 
 ```
+#Created by Vlad Sorodoc
+
 import RPi.GPIO as GPIO
 import time
 
