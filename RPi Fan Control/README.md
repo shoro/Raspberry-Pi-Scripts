@@ -1,5 +1,8 @@
 # RPi Fan Control
 
+> [!CAUTION]
+> **_Make sure to set the FAN_PIN_**.
+
 ### Download the script
 
 ```
