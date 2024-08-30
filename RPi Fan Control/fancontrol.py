@@ -1,5 +1,11 @@
 #Made by Vlad Sorodoc
 
+#SETTINGS
+FAN_PIN = 14  # Set fan pin (Default is 14)
+TEMP_ON = 50.0  # Temperature (in Celsius) to turn the fan ON (Default is 50)
+TEMP_OFF = 40.0 # Temperature (in Celsius) to turn the fan OFF (Default is 40)
+TEMP_CHECK = 1 # Time before checking the temperature again (Default is 1 second)
+
 import RPi.GPIO as GPIO
 import time
 
@@ -9,11 +15,8 @@ GPIO.setwarnings(False)
 # Set the GPIO numbering mode
 GPIO.setmode(GPIO.BCM)
 
-# Define the pin to which the fan is connected
-fan_pin = 14  # GPIO pin 14
-
 # Set the pin as OUTPUT
-GPIO.setup(fan_pin, GPIO.OUT)
+GPIO.setup(FAN_PIN, GPIO.OUT)
 
 # Function to read the CPU temperature
 def get_cpu_temperature():
@@ -26,26 +29,21 @@ def get_cpu_temperature():
         print(f"Error reading CPU temperature: {e}")
         return None
 
-# Define temperature thresholds
-TEMP_ON = 50.0  # Temperature (in Celsius) to turn the fan ON
-TEMP_OFF = 40.0 # Temperature (in Celsius) to turn the fan OFF
-TEMP_CHECK = 1 # Time before checking the temperature again (seconds)
-
 try:
     while True:
         # Get the current CPU temperature
         temp = get_cpu_temperature()
 
         if temp is not None:
-            print(f"Current CPU Temperature: {temp:.1f}°C")
+            print(f"Current CPU Temperature: {temp:.1f} °C")
 
             # Turn the fan ON if the temperature exceeds TEMP_ON
             if temp > TEMP_ON:
-                GPIO.output(fan_pin, GPIO.HIGH)
+                GPIO.output(FAN_PIN, GPIO.HIGH)
                 print("Fan is ON.")
             # Turn the fan OFF if the temperature drops below TEMP_OFF
             elif temp < TEMP_OFF:
-                GPIO.output(fan_pin, GPIO.LOW)
+                GPIO.output(FAN_PIN, GPIO.LOW)
                 print("Fan is OFF.")
         
         # Wait for a while before checking the temperature again
