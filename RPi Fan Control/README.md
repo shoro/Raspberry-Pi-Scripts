@@ -1,18 +1,18 @@
 # RPi Fan Control
 
 > [!CAUTION]
-> Make sure to set the **_FAN_PIN_** correctly in the **_'RPi-fancontrol.py'_** script.
+> Make sure to set the **_FAN_PIN_** correctly in the **_'RPi_fancontrol.py'_** script.
 
 ### Download the script
 
 ```
-curl -O https://raw.githubusercontent.com/shoro/Raspberry-Pi-Scripts/main/RPi%20Fan%20Control/RPi-fancontrol.py
+curl -O https://raw.githubusercontent.com/shoro/Raspberry-Pi-Scripts/main/RPi%20Fan%20Control/RPi_fancontrol.py.py
 ```
 
 ### Edit the script
 Make sure to set the **_FAN_PIN_**, TEMP_ON, TEMP_OFF, TEMP_CHECK
 ```
-sudo nano RPi-fancontrol.py
+sudo nano RPi_fancontrol.py
 ```
 
 ### Save and exit
@@ -21,7 +21,7 @@ CTRL+X > Y > ENTER
 ### Run the script
 
 ```
-sudo python3 RPi-fancontrol.py
+sudo python3 RPi_fancontrol.py
 ```
 
 ### Stop the script
