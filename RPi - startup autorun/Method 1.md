@@ -1,1 +1,24 @@
-# Add script in <em>rc.local<em>
+# Adding the Script to <em>'rc.local'</em>
+
+### Edit <em>'rc.local'</em>:
+Open the <em><b>'rc.local'</b></em> file in a text editor like <em><b>'nano'</b></em>:
+```
+sudo nano /etc/rc.local
+```
+
+### Add the Script:
+Add the following line before <em><b>'exit 0'</b></em> to run the script at startup
+```
+sudo python3 /path/to/your/script.py &
+```
+Replace <em><b>'/path/to/your/script.py'</b></em> with the full path to your Python script. Also, make sure to include the <em><b>'&'</b></em> at the end to run the script in the background.
+
+### Save and Exit
+CTRL+X -> Y -> ENTER
+
+### Reboot
+```
+sudo reboot
+```
+
+### <em>FINISH</em>
